@@ -1,5 +1,14 @@
 public class Main {
+
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
+        Game blackjack = new Game();
+        blackjack.play();
+
+
+        //Deck cards = new Deck(rank, suit, points);
+
+        //cards.printDeck()
+
     }
 }
