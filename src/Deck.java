@@ -43,6 +43,7 @@ public class Deck {
 
     }
 
+    //Tested and working
     public void shuffle(){
 
         /* For i = last index of the deck down to 0
@@ -75,6 +76,7 @@ public class Deck {
 
     }
 
+    //Tested and working
     public void printDeck(){
 
         System.out.println("\n\n\nNUMBER OF CARDS " + cardsLeft);
