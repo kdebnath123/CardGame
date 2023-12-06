@@ -1,16 +1,19 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Player {
 
+    Scanner input = new Scanner(System.in);
     private String name;
     private ArrayList<Card> hand;
     private int money;
-    private static int startAmount = 1000;
+    private static int startAmount = 2000;
 
-    public Player(String name, ArrayList<Card> hand, int money) {
+
+    public Player(String name, ArrayList<Card> hand) {
 
         this.name = name;
-        this.money = money;
+        this.money = startAmount;
 
         //might break -- may need to make a copy of the cards
         this.hand = new ArrayList<Card>();
@@ -22,9 +25,9 @@ public class Player {
     }
 
 
-    public Player(String name, int money) {
+    public Player(String name) {
         this.name = name;
-        this.money = money;
+        this.money = startAmount;
     }
 
     public String getName() {
@@ -39,7 +42,7 @@ public class Player {
         return money;
     }
 
-    public void addPoints(int amount){
+    public void changeMoney(int amount){
         money += amount;
     }
 
@@ -72,5 +75,29 @@ public class Player {
         }
     }
 
+    //repromts till valid input
+    //returns true for draw
+    //returns false for a stay
+    public boolean willMove(){
+
+        String move = "";
+
+        while(true){
+
+            System.out.println("Do you want to draw or stay (d/s): ");
+            move = input.nextLine();
+
+            //draw a card
+            if(move.equals("d")){
+                return true;
+            }
+            //stay
+            if(move.equals("s")){
+                return false;
+            }
+
+        }
+
+    }
 
 }

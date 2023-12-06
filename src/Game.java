@@ -8,14 +8,26 @@ public class Game {
     // instance variables for deck and cards
     private String[] rank = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
     private String[] suit = {"Diamonds", "Spades", "Clubs", "Hearts"};
-    private int[] points = {1,2,3,4,5,6,7,8,9,10,10,10,10};
+    private int[] points = {11,2,3,4,5,6,7,8,9,10,10,10,10};
     private Deck deck;
 
 
     //player instance variables
-    private static int startAmount = 1000;
+    private static int gambleAmount = 500;
     private Player player1;
     private Player dealer;
+
+    public static void main(String[] args) {
+
+        Game blackjack = new Game();
+        blackjack.play();
+
+
+        //Deck cards = new Deck(rank, suit, points);
+
+        //cards.printDeck()
+
+    }
 
     public Game() {
         // Creates deck of 52 cards
@@ -23,13 +35,14 @@ public class Game {
 
         // Gets name and creates player class
         System.out.print("Enter name: ");
-        this.player1 = new Player(input.nextLine(),startAmount);
+        this.player1 = new Player(input.nextLine());
 
         //creates dealer
-        this.dealer = new Player("dealer",0);
+        this.dealer = new Player("dealer");
     }
 
     public void play(){
+
         round();
     }
 
@@ -38,31 +51,112 @@ public class Game {
         // Clear screen -- from javapoint
         System.out.print("\033[H\033[2J");
 
-        // Deals and shows two cards to player
+        // Deals cards
         player1.addCard(deck.deal());
+        dealer.addCard(deck.deal());
         player1.addCard(deck.deal());
+        dealer.addCard(deck.deal());
+
+        //print player hand
+        System.out.println("Your current hand: ");
         player1.printHand();
 
+        //print delaers first card
+        System.out.println("\nDealers current hand: \n" + "unkown");
+        System.out.println(dealer.getHand().get(0));
 
-        //BLACK JACK CONTROL
-        if(player1.getSum() == 21){
-            //do smt
+
+        //players turn
+        while(player1.getSum() <= 21){
+
+            System.out.print("\033[H\033[2J");
+            player1.printHand();
+
+            if(player1.willMove()){
+                player1.addCard(deck.deal());
+            }
+
+            else{
+                break;
+            }
         }
 
-        boolean isDrawing = true;
-        while(isDrawing){
+        //dealer must hit until they reach 17 or great
+        while(dealer.getSum() < 17){
+            dealer.addCard((deck.deal()));
+        }
 
-            //System.out.println("Do you want to draw or stay (d/s): ");
-            //String input = input.nextLine();
+
+        //WinControl();
 
 
+
+
+
+
+
+
+
+
+
+    }
+
+    //returns true if player has won, false if dealer has one
+    private void playerHasWon(boolean PlayerIsWinner) {
+
+        System.out.print("\033[H\033[2J");
+
+        if(PlayerIsWinner){
+            System.out.println("YOU WON!!!!!");
+
+            if(player1.getSum() == 21){
+
+                System.out.println("You got black jack and earned " + gambleAmount * 2);
+                player1.changeMoney(gambleAmount * 2);
+                return;
+            }
+
+            System.out.println("You earned " + gambleAmount);
+            player1.changeMoney(gambleAmount);
+            return;
+
+        }
+        else{
+            //fail control
         }
 
 
 
+    }
+
+
+    //ACE CONTROL
+    // ACES ARE ALWAYS WORTH 11 unless they bust the hand then it should be one??
 
 
 
+    //repromts till valid input
+    //returns true for draw
+    //returns false for a stay
+    public boolean willMove(){
+
+        String move = "";
+
+        while(true){
+
+            System.out.println("Do you want to draw or stay (d/s): ");
+            move = input.nextLine();
+
+           //draw a card
+           if(move.equals("d")){
+               return true;
+           }
+           //stay
+           if(move.equals("s")){
+               return false;
+           }
+
+        }
 
     }
 
