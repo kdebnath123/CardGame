@@ -39,7 +39,7 @@ public class Deck {
             return null;
         }
 
-        return deck.get(cardsLeft--);
+        return deck.get(--cardsLeft);
 
     }
 

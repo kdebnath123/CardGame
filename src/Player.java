@@ -7,10 +7,10 @@ public class Player {
     private String name;
     private ArrayList<Card> hand;
     private int money;
-    private static int startAmount = 2000;
+    private int startAmount;
 
 
-    public Player(String name, ArrayList<Card> hand) {
+    public Player(String name, ArrayList<Card> hand, int startAmount) {
 
         this.name = name;
         this.money = startAmount;
@@ -24,10 +24,10 @@ public class Player {
 
     }
 
-
-    public Player(String name) {
+    public Player(String name, int startAmount) {
         this.name = name;
         this.money = startAmount;
+        this.hand = new ArrayList<Card>();
     }
 
     public String getName() {
@@ -50,25 +50,44 @@ public class Player {
         hand.add(card);
     }
 
+    public Card getLastCard(){
+        return hand.get(hand.size() - 1);
+    }
+
     public int getSum() {
+
         int sum = 0;
+        int numAces = 0;
+
         for(Card card: hand){
             sum += card.getPoints();
+
+            if(card.getRank().equals(("Ace"))){
+                numAces++;
+            }
+
+        }
+        //controls for aces
+        //if the hand will bust turn an ace from 11 to 1
+        //repeat if there are aces to turn
+        while(sum > 21 && numAces > 0){
+            sum -= 10;
         }
 
         return sum;
     }
 
+
     public String toString(){
 
         //untested
-        return this.name + " has " + this.money + " points\n" + this.name + "’s cards: " + hand;
+        return this.name + " has " + this.money + " points\n" + this.name + "’s cards: " + this.hand;
 
     }
 
     public void printHand(){
 
-        System.out.println("Your current hand is: ");
+        System.out.println("\n" + this.name + "'s current hand is: ");
 
         for(Card card: hand){
             System.out.println(card);
@@ -83,8 +102,7 @@ public class Player {
         String move = "";
 
         while(true){
-
-            System.out.println("Do you want to draw or stay (d/s): ");
+            System.out.print("Do you want to draw or stay (d/s): ");
             move = input.nextLine();
 
             //draw a card
@@ -98,6 +116,10 @@ public class Player {
 
         }
 
+    }
+
+    public void clearHand(){
+        hand.clear();
     }
 
 }
