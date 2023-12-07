@@ -1,28 +1,28 @@
-
+// Kirin Debnath
 import java.util.ArrayList;
 
 public class Deck {
 
+    // Instance variables to hold each card
     private ArrayList<Card> deck;
+    //Number of cards left
     private int cardsLeft;
 
-
-    public Deck(String[] rank, String[] suit, int[] points) {
+    // Deck Constructor
+    public Deck(String[] rank, String[] suits, int[] points) {
 
         this.deck = new ArrayList<Card>();
-        createDeck(rank, suit, points);
-        this.cardsLeft = deck.size();
-    }
 
-    public void createDeck(String[] rank, String[] suits, int[] points){
-        // Adds new card object to deck
-        // Creates deck with every rank of every color
+        // Creates deck with rank of every suit
         for(String suit : suits) {
             for (int i = 0; i < rank.length; i++) {
+
+                // Adds new card object to deck
                 deck.add(new Card(rank[i], suit, points[i]));
             }
         }
 
+        this.cardsLeft = deck.size();
     }
 
     // Returns true iff 0 cards left in deck
@@ -30,45 +30,39 @@ public class Deck {
         return cardsLeft == 0;
     }
 
+    // Gets the number of cards left in the deck
     public int getCardsLeft(){
         return cardsLeft;
     }
 
+    // Deals a card by returning the top card of deck
     public Card deal(){
+
         if(isEmpty()){
             return null;
         }
 
+        // Gets top card off of deck
         return deck.get(--cardsLeft);
 
     }
 
-    //Tested and working
+    // Shuffles the deck
+    // Precondition: All cards must be returned to deck
     public void shuffle(){
 
-        /* For i = last index of the deck down to 0
-            Generate a random integer r (using Math.random) between 0
-            and i, inclusive;
-            Exchange cards[i] and cards[r]
-
-         */
 
         int randomNum;
-        Card temp;
 
         for (int i = deck.size() - 1; i > 0; i--){
 
+            // Generates random number from 0 to i
             randomNum = (int)(Math.random() * (i + 1));
-            // Swaps cards and random num and i
-            //Since set method returns previosuly stored elem e, no temp var needed
-            /*
-            temp = deck.get(i);
-            System.out.println(temp);
-            deck.set(i, deck.get(randomNum));
-            System.out.println(temp);
-*/
 
-            deck.set(randomNum, deck.set(i, deck.get(randomNum)));
+
+            // Swaps cards and random number and i
+            // Takes advantage of set method returning previously stored card: removes need for temp card
+             deck.set(randomNum, deck.set(i, deck.get(randomNum)));
 
         }
 
@@ -76,11 +70,12 @@ public class Deck {
 
     }
 
-    //Tested and working
+    // Prints all cards in deck
     public void printDeck(){
 
         System.out.println("\n\n\nNUMBER OF CARDS " + cardsLeft);
 
+        // Prints each card in deck
         for(Card cards : deck){
             System.out.println(cards);
         }

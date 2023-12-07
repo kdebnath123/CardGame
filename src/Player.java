@@ -1,3 +1,4 @@
+// Kirin Debnath
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -59,18 +60,21 @@ public class Player {
         int sum = 0;
         int numAces = 0;
 
+        // add each card's value in players hand to sum
         for(Card card: hand){
             sum += card.getPoints();
 
+            // If the card is an ace, increase ace count
             if(card.getRank().equals(("Ace"))){
                 numAces++;
             }
 
         }
-        //controls for aces
-        //if the hand will bust turn an ace from 11 to 1
-        //repeat if there are aces to turn
-        while(sum > 21 && numAces > 0){
+
+        // Controls for aces
+        // If the hand will bust turn an ace from 11 to 1
+        // Repeat if there are aces to turn
+        while(numAces > 0 && sum > 21){
             sum -= 10;
         }
 
