@@ -62,11 +62,11 @@ public class Game {
 
         }
 
-        /*
+
         System.out.println("You have no more money. :(");
         System.out.println("Thanks for playing!!");
 
-         */
+
 
 
 
@@ -133,7 +133,7 @@ public class Game {
                 //Draw a Card
                 player1.addCard(deck.deal());
             }
-            // when they stay end the loop
+            // When they stay end the loop
             else{
                 break;
             }
