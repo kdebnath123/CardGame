@@ -52,7 +52,7 @@ public class Game {
 
             deck.shuffle();
 
-            // play the round of blackjack
+            // Play the round of blackjack
             round();
 
             // Clear all hands
