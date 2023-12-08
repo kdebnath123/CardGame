@@ -1,16 +1,17 @@
 // Kirin Debnath
+// Last updated: December 7th 2023
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
 
     Scanner input = new Scanner(System.in);
+    // Instance Variables
     private String name;
     private ArrayList<Card> hand;
     private int money;
-    private int startAmount;
 
-
+    // Constructs player
     public Player(String name, ArrayList<Card> hand, int startAmount) {
 
         this.name = name;
@@ -25,36 +26,46 @@ public class Player {
 
     }
 
+    // Constructs player
     public Player(String name, int startAmount) {
         this.name = name;
         this.money = startAmount;
         this.hand = new ArrayList<Card>();
     }
 
+
+    // Gets Player's name
     public String getName() {
         return name;
     }
 
+    // Gets players hand
     public ArrayList<Card> getHand() {
         return hand;
     }
 
+    // Gets players money amount
     public int getMoney() {
         return money;
     }
 
+    // Changes money of player
     public void changeMoney(int amount){
         money += amount;
     }
 
+    // Adds card to players hand
     public void addCard(Card card){
         hand.add(card);
     }
 
+    // Returns the last card drawn
     public Card getLastCard(){
         return hand.get(hand.size() - 1);
     }
 
+    // Adds up the players hand and returns total
+    // Controls for aces if they were to bust the hand
     public int getSum() {
 
         int sum = 0;
@@ -82,38 +93,50 @@ public class Player {
     }
 
 
+    // Player's two string
     public String toString(){
 
-        //untested
-        return this.name + " has " + this.money + " points\n" + this.name + "’s cards: " + this.hand;
+        // Adds player's information to the return string
+        String output = this.name + " has " + this.money + " points\n" + this.name + "’s cards: \n";
+
+        // Adds each card in players hand to the return string on a new line
+        for (Card cards: hand) {
+            output += cards + "\n";
+        }
+
+        return output;
 
     }
 
+
+    // Prints players hand
     public void printHand(){
 
         System.out.println("\n" + this.name + "'s current hand is: ");
 
+        // Prints each card in hand
         for(Card card: hand){
             System.out.println(card);
         }
     }
 
-    //repromts till valid input
-    //returns true for draw
-    //returns false for a stay
+    // Prompts for the move of player
+    // Returns true if they want to move and false if they want to stay
+    // Precondition: should have the ability to move (hand is not busted)
     public boolean willMove(){
 
-        String move = "";
+        String move;
 
+        // Repromts until either d or s is inputed
         while(true){
             System.out.print("Do you want to draw or stay (d/s): ");
             move = input.nextLine();
 
-            //draw a card
+            // If they want to move return true
             if(move.equals("d")){
                 return true;
             }
-            //stay
+            // If they want to stay return false
             if(move.equals("s")){
                 return false;
             }
@@ -122,6 +145,7 @@ public class Player {
 
     }
 
+    // Clears the player's hand, 'puts' the cards back in deck for further use
     public void clearHand(){
         hand.clear();
     }

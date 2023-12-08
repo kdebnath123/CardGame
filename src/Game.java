@@ -1,4 +1,5 @@
 // Blackjack by Kirin Debnath
+// Last updated: December 7th 2023
 import java.util.Scanner;
 
 
@@ -41,6 +42,9 @@ public class Game {
     // Allow user to play rounds until bankrupt
     public void play(){
 
+
+
+
         printInstructions();
 
         // If the player has money to bet perform a round
@@ -58,8 +62,13 @@ public class Game {
 
         }
 
+        /*
         System.out.println("You have no more money. :(");
         System.out.println("Thanks for playing!!");
+
+         */
+
+
 
     }
 
@@ -92,7 +101,7 @@ public class Game {
     }
 
     // Controls single round of Blackjack
-    // Each player gets 2 cards, allow player to hit or stay,
+    // Deals intial cards, allows player and dealer to have a turn
     public void round(){
 
         // Deals 2 cards to each player
@@ -105,12 +114,19 @@ public class Game {
         System.out.println("\nDealers current hand: \n" + "unkown");
         System.out.println(dealer.getLastCard());
 
+        // Prints players hand
+        player1.printHand();
 
         // Players turn
         // As long as they are under 21, ask to hit or stay
-        while(player1.getSum() < 21){
+        while(player1.getSum() <= 21){
 
-            player1.printHand();
+            // Check/trigger blackjack win
+            if (player1.getSum() == 21) {
+                winLossScreen(true);
+                return;
+            }
+
 
             // If the player wants to draw a card
             if(player1.willMove()){
@@ -122,19 +138,16 @@ public class Game {
                 break;
             }
 
-            // Check/trigger blackjack win
-            if (player1.getSum() == 21) {
-                // Show them final hand
-                player1.printHand();
+            player1.printHand();
 
-                winLossScreen(true);
-                return;
-            }
 
         }
 
         // Check/trigger for player bust
         if(player1.getSum() > 21){
+            // Print the last card
+            System.out.println(player1.getLastCard());
+            // Inform of bust
             System.out.println("Player busted");
             winLossScreen(false);
             return;
@@ -161,6 +174,8 @@ public class Game {
 
         // True if player has tie/higher score
         winLossScreen(player1.getSum() >= dealer.getSum());
+
+
     }
 
     // Check type of win/loss, change money, print rounds result
@@ -196,6 +211,9 @@ public class Game {
         System.out.println("Your new total is " + player1.getMoney() + " dollars");
     }
 
+
+    // Main Function
+    // Creates and plays game
     public static void main(String[] args) {
 
         // Creates instance of game class
